@@ -9,6 +9,7 @@ import PasswordModal from "../utility/PasswordModal";
 import { toast } from "react-toastify";
 
 const url = "https://whisper-b.onrender.com";
+
 // const url = "http://localhost:5000";
 
 const socket = io.connect(url);
