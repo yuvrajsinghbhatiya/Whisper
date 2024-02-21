@@ -13,7 +13,7 @@ function Sidebar({
   return (
     <>
       <div
-        className={`w-full sm:w-1/4 p-8 
+        className={`w-full sm:w-1/4 p-8  
         ${
           isDarkTheme
             ? "bg-neutral-800 text-white"
@@ -49,7 +49,7 @@ function Sidebar({
                 {room.isPrivate && (
                   <span className="ml-2 text-xs text-white px-2 py-1 rounded-md">
                     <FaLock
-                      className={`${isDarkTheme ? "text-white" : "text-black"}`}
+                      className={`${isDarkTheme ? "text-white" : "text-black"}`} size={14}
                     />
                   </span>
                 )}

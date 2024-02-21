@@ -22,7 +22,7 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
 
   return (
     <nav
-      className={`py-2 ${
+      className={`py-3 ${
         isDarkTheme ? "bg-neutral-900" : "bg-white"
       } shadow-xl`}
     >
@@ -32,8 +32,8 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
             src={logo}
             alt="Logo"
             className="mr-2 mt-2"
-            width={32}
-            height={32}
+            width={28}
+            height={28}
           />{" "}
           <h1
             className={`text-2xl font-bold ${

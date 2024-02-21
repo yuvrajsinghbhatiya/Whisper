@@ -1,36 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import PropTypes from "prop-types";
 import io from "socket.io-client";
 import InputBox from "../utility/InputBox";
 import Sidebar from "../utility/Sidebar";
 import Messages from "../utility/Messages";
 import PasswordModal from "../utility/PasswordModal";
+import CreatePrivateRoomModal from "../utility/CreatePrivateRoomModal";
 import { toast } from "react-toastify";
 
 const url = "https://whisper-b.onrender.com";
 
-// const url = "http://localhost:5000";
-
 const socket = io.connect(url);
 
 function Chat({ isDarkTheme, user }) {
-  // State for messages
   const [messages, setMessages] = useState([]);
-  // State for auto-scrolling
   const [toggleScroll, setToggleScroll] = useState(false);
-  // State for current room
   const [currentRoom, setCurrentRoom] = useState();
-  // State for rooms
   const [rooms, setRooms] = useState([]);
-  // State for main chat area
   const [isMainChatEnabled, setIsMainChatEnabled] = useState(false);
-  // State for join room modal
   const [showJoinRoomModal, setShowJoinRoomModal] = useState(false);
-  // State for selected room
   const [selectedRoom, setSelectedRoom] = useState(null);
-  // State for password
   const [password, setPassword] = useState("");
+  const [showCreatePrivateRoomModal, setShowCreatePrivateRoomModal] = useState(false);
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
@@ -119,32 +110,32 @@ function Chat({ isDarkTheme, user }) {
     setIsMainChatEnabled(!isMainChatEnabled);
   };
 
-  const createPrivateRoom = () => {
-    const roomName = prompt("Enter the name of the private room:");
-    if (roomName) {
-      const password = prompt("Enter the password for the private room:");
-      fetch(`${url}/api/rooms/createRoom`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ roomName, password, isPrivate: true }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            toast(`Private chat room "${roomName}" created successfully!`);
-          } else {
-            toast("Failed to create private chat room. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error creating private chat room:", error);
-          toast(
-            "An error occurred while creating private chat room. Please try again."
-          );
-        });
+  const createPrivateRoom = (roomName, password) => {
+    if (!roomName.trim() || !password.trim()) {
+      toast.error("Please enter room name and password.");
+      return;
     }
+    fetch(`${url}/api/rooms/createRoom`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ roomName, password, isPrivate: true }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          toast(`Private chat room "${roomName}" created successfully!`);
+        } else {
+          toast("Failed to create private chat room. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating private chat room:", error);
+        toast(
+          "An error occurred while creating private chat room. Please try again."
+        );
+      });
   };
 
   return (
@@ -155,19 +146,24 @@ function Chat({ isDarkTheme, user }) {
     >
       <div className="flex flex-1">
         <Sidebar
-          createPrivateRoom={createPrivateRoom}
+          createPrivateRoom={() => setShowCreatePrivateRoomModal(true)}
           rooms={rooms}
           isDarkTheme={isDarkTheme}
           joinRoom={joinRoom}
           currentRoom={currentRoom}
         />
 
-        {/* Main chat area */}
         <div className="w-full sm:w-3/4 p-2">
           {!currentRoom ? (
-            <div className="flex flex-col items-center justify-center h-[72vh]">
-              <h2 className="text-2xl">Welcome to <b>WHISPER</b></h2>
-              <h4 className="text-lg mt-4">
+            <div
+              className={`flex flex-col items-center rounded-lg justify-center h-[86vh] ${
+                isDarkTheme ? "bg-neutral-900 text-white " : "bg-white text-gray-800"
+              }`}
+            >
+              <h2 className="text-5xl text-center">
+                Welcome <br /> to <br /> <b>WHISPER</b>
+              </h2>
+              <h4 className="text-1xl mt-5">
                 {" "}
                 Please join a room to start chatting
               </h4>
@@ -196,13 +192,19 @@ function Chat({ isDarkTheme, user }) {
         </div>
       </div>
 
-      {/* Join Room Modal */}
       {showJoinRoomModal && (
         <PasswordModal
           setPassword={setPassword}
           setShowJoinRoomModal={setShowJoinRoomModal}
           handleJoinRoom={handleJoinRoom}
           password={password}
+        />
+      )}
+
+      {showCreatePrivateRoomModal && (
+        <CreatePrivateRoomModal
+          createPrivateRoom={createPrivateRoom}
+          onClose={() => setShowCreatePrivateRoomModal(false)}
         />
       )}
     </div>

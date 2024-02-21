@@ -1,5 +1,4 @@
 import React from "react";
-import { LuMessageSquarePlus } from "react-icons/lu";
 
 
 function PrivateRoomBtn({createPrivateRoom,isDarkTheme}) {
@@ -10,9 +9,9 @@ function PrivateRoomBtn({createPrivateRoom,isDarkTheme}) {
           onClick={createPrivateRoom}
           className={`${
             isDarkTheme ? "bg-accentDark hover:bg-accent" : "bg-accent hover:bg-accentDark"
-          }  text-white px-4 py-2 rounded-lg w-full text-md font-semibold flex items-center justify-center`}
+          }  text-white px-4 py-2 rounded-lg  text-md font-semibold flex items-center justify-center`}
         >
-          Create Private Room <LuMessageSquarePlus  className="ml-2" size={20}/>
+          Create Private Room
         </button>
       </div>
     </>
