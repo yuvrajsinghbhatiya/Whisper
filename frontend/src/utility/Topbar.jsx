@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { FaLock } from "react-icons/fa";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { IoRemoveCircleOutline } from "react-icons/io5";
 import PrivateRoomBtn from "./PrivateRoomBtn";
 
 function Topbar({
