@@ -6,6 +6,7 @@ import Sidebar from "../utility/Sidebar";
 import Messages from "../utility/Messages";
 import PasswordModal from "../utility/PasswordModal";
 import CreatePrivateRoomModal from "../utility/CreatePrivateRoomModal";
+import Topbar from "../utility/Topbar"; // Import the Topbar component
 import { toast } from "react-toastify";
 
 const url = "https://whisper-b.onrender.com";
@@ -21,7 +22,9 @@ function Chat({ isDarkTheme, user }) {
   const [showJoinRoomModal, setShowJoinRoomModal] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [password, setPassword] = useState("");
-  const [showCreatePrivateRoomModal, setShowCreatePrivateRoomModal] = useState(false);
+  const [showCreatePrivateRoomModal, setShowCreatePrivateRoomModal] =
+    useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 600); // Define small screen width
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
@@ -45,13 +48,22 @@ function Chat({ isDarkTheme, user }) {
   }, [currentRoom]);
 
   useEffect(() => {
+    if (!currentRoom) return;
+
     fetch(`${url}/api/messages/getMessages/${currentRoom}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
       .then((data) => {
         setMessages(data);
       })
-      .catch((error) => console.error("Error fetching messages:", error));
-  });
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
+  }, [currentRoom]);
 
   const joinRoom = (room) => {
     if (room.isPrivate) {
@@ -61,6 +73,15 @@ function Chat({ isDarkTheme, user }) {
       socket.emit("joinRoom", room.name);
       setCurrentRoom(room.name);
     }
+  };
+
+  const leaveRoom = (room) => {
+    socket.emit("leaveRoom", room);
+    setCurrentRoom("");
+  };
+
+  const handleLeaveRoom = () => {
+    leaveRoom(currentRoom);
   };
 
   const handleJoinRoom = () => {
@@ -90,11 +111,6 @@ function Chat({ isDarkTheme, user }) {
           "An error occurred while checking room password. Please try again."
         );
       });
-  };
-
-  const leaveRoom = (room) => {
-    socket.emit("leaveRoom", room);
-    setCurrentRoom("general");
   };
 
   const chatBoxRef = useRef(null);
@@ -138,26 +154,51 @@ function Chat({ isDarkTheme, user }) {
       });
   };
 
+  // Function to handle resizing and update the state accordingly
+  const handleResize = () => {
+    setIsSmallScreen(window.innerWidth < 600);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div
       className={`w-screen flex flex-col ${
-        isDarkTheme ? "bg-neutral-800 text-white" : "bg-gray-100 text-gray-800"
+        isDarkTheme ? "bg-dark1 text-white" : "bg-gray-100 text-gray-800"
       }`}
     >
-      <div className="flex flex-1">
+      {isSmallScreen ? (
+        <Topbar
+          isDarkTheme={isDarkTheme}
+          rooms={rooms}
+          currentRoom={currentRoom}
+          createPrivateRoom={createPrivateRoom}
+          joinRoom={joinRoom}
+          leaveRoom={leaveRoom}
+        />
+      ) : (
         <Sidebar
           createPrivateRoom={() => setShowCreatePrivateRoomModal(true)}
           rooms={rooms}
           isDarkTheme={isDarkTheme}
           joinRoom={joinRoom}
           currentRoom={currentRoom}
+          leaveRoom={leaveRoom}
         />
-
-        <div className="w-full sm:w-3/4 p-2">
+      )}
+      <div className="flex flex-1">
+        <div className="w-full sm:w-5/4 p-2">
           {!currentRoom ? (
             <div
-              className={`flex flex-col items-center rounded-lg justify-center h-[86vh] ${
-                isDarkTheme ? "bg-neutral-900 text-white " : "bg-white text-gray-800"
+              className={`flex flex-col items-center rounded-lg shadow-md justify-center h-[86vh] ${
+                isDarkTheme
+                  ? "bg-darkslate text-zinc-400 "
+                  : "bg-white text-neutral-700"
               }`}
             >
               <h2 className="text-5xl text-center">
@@ -197,7 +238,9 @@ function Chat({ isDarkTheme, user }) {
           setPassword={setPassword}
           setShowJoinRoomModal={setShowJoinRoomModal}
           handleJoinRoom={handleJoinRoom}
+          handleLeaveRoom={handleLeaveRoom}
           password={password}
+          isDarkTheme={isDarkTheme}
         />
       )}
 
@@ -205,6 +248,7 @@ function Chat({ isDarkTheme, user }) {
         <CreatePrivateRoomModal
           createPrivateRoom={createPrivateRoom}
           onClose={() => setShowCreatePrivateRoomModal(false)}
+          isDarkTheme={isDarkTheme}
         />
       )}
     </div>

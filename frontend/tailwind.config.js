@@ -32,8 +32,11 @@ export default {
     },
     extend: {
       colors: {
-        accent: '#74adfa',
-        accentDark: '#5a9cf9',
+        accent: '#5a9cf9',
+        accentDark: '#3c91e9',
+        darkslate: '#1f222c',
+        dark1: '#0e1119',
+        dark2: '#2f3241',
       },
     },
   },

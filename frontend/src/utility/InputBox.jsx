@@ -43,7 +43,7 @@ function InputBox({isDarkTheme,user,setMessages,currentRoom,joinRoom,leaveRoom,s
     <>
     <div
             className={`left-0 w-full h-[10vh] mt-6 ${
-              isDarkTheme ? "bg-neutral-800" : "bg-gray-100"
+              isDarkTheme ? "bg-dark1" : "bg-gray-100"
             }`}
           >
             <div className="max-w-screen-md mx-auto px-4 py-2 ">
@@ -58,7 +58,7 @@ function InputBox({isDarkTheme,user,setMessages,currentRoom,joinRoom,leaveRoom,s
                   className={`flex-1 p-3 rounded-xl shadow-lg border-2  focus:outline-none
                    ${
                      isDarkTheme
-                       ? "bg-neutral-700 text-white border-neutral-500"
+                       ? "bg-darkslate text-white border-dark2"
                        : "border bg-gray-100 text-black border-gray-300"
                    }`}
                 />

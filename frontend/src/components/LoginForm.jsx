@@ -43,7 +43,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
     >
       <div
         className={`w-96 p-6 rounded-lg shadow-xl ${
-          isDarkTheme ? "bg-neutral-800" : "bg-white"
+          isDarkTheme ? "bg-darkslate" : "bg-white"
         }`}
       >
         <h2
@@ -53,7 +53,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
         >
           Welcome to Whisper
           <br />
-          <span className="text-sm font-medium text-gray-500">
+          <span className="text-sm font-medium text-zinc-400">
             login or signup here
           </span>
         </h2>
@@ -61,8 +61,8 @@ function LoginForm({ onLogin, isDarkTheme }) {
         <form onSubmit={handleSubmit}>
           <label
             htmlFor="profilePic"
-            className={`block mt-8 ${
-              isDarkTheme ? "text-white" : "text-gray-800"
+            className={`block mt-8 text-md font-medium ${
+              isDarkTheme ? "text-white" : "text-neutral-800"
             }`}
           >
             Enter your Username
@@ -74,7 +74,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
             placeholder="must be unique..."
             className={`w-full p-2 rounded outline-none mt-2 ${
               isDarkTheme
-                ? "bg-neutral-700 text-white"
+                ? "bg-dark1 text-white"
                 : " border bg-gray-100 text-black"
             }`}
           />

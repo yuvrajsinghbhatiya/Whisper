@@ -15,15 +15,15 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
-    setTimeout(() => {
-      setShowDropdown(false);
-    }, 3000);
+    // setTimeout(() => {
+    //   setShowDropdown(false);
+    // }, 3000);
   };
 
   return (
     <nav
       className={`py-3 ${
-        isDarkTheme ? "bg-neutral-900" : "bg-white"
+        isDarkTheme ? "bg-darkslate" : "bg-white"
       } shadow-xl`}
     >
       <div className="px-10 mx-auto flex justify-between items-center ">
@@ -36,6 +36,7 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
             height={28}
           />{" "}
           <h1
+          onClick={() => window.location.reload()}
             className={`text-2xl font-bold ${
               isDarkTheme ? "text-white" : "text-black"
             }`}
@@ -49,7 +50,7 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
             onClick={toggleDarkTheme}
             className={`px-4 py-2 rounded-full ${
               isDarkTheme
-                ? "bg-neutral-700 text-white font-semibold hover:bg-neutral-800 hover:text-white"
+                ? "bg-dark1 text-white font-semibold hover:bg-dark2 hover:text-white"
                 : "bg-gray-200 text-gray-700 font-semibold hover:bg-gray-500 hover:text-white"
             }`}
           >
@@ -72,17 +73,17 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
 
               {showDropdown && (
                 <div
-                  className={`absolute right-0 w-32 ${
-                    isDarkTheme ? "bg-neutral-800" : "bg-white"
+                  className={`absolute right-0 w-32 border-2 border-dark1 ${
+                    isDarkTheme ? "bg-darkslate" : "bg-white"
                   }  rounded-lg shadow-lg p-2 `}
                 >
                   <div className="flex flex-col items-center">
                     <span
                       className={`block mb-2 text-md text-center font-bold ${
                         isDarkTheme
-                          ? "text-white bg-neutral-700"
+                          ? "text-white bg-dark2"
                           : "text-gray-700 bg-slate-200"
-                      } w-full p-2 rounded-lg `}
+                      } w-full  p-2 rounded-lg `}
                     >
                       {user}
                     </span>
@@ -90,7 +91,7 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
                       onClick={onLogout}
                       className={`block  text-md text-center font-bold ${
                         isDarkTheme
-                          ? "text-white bg-neutral-700 hover:bg-neutral-600"
+                          ? "text-white bg-dark2 hover:bg-dark1"
                           : "text-gray-700 bg-slate-200 hover:bg-slate-300"
                       } w-full p-2 rounded-lg `}
                     >
