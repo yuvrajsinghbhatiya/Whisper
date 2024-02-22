@@ -35,7 +35,7 @@ function Topbar({
         </div>
         <div>
           <button
-            className={`px-3 py-2 rounded-md text-md font-semibold focus:outline-none ${
+            className={`px-3 py-2 rounded-md text-md font-semibold focus:outline-none  ${
               isDarkTheme
                 ? "bg-dark1 text-white hover:bg-darkslate "
                 : "bg-gray-200 text-black hover:bg-gray-300"
@@ -65,7 +65,7 @@ function Topbar({
                 }   p-2 rounded-lg `}
               >
                 {room.isPrivate && (
-                  <span className="text-xs text-white px-2 py-1 rounded-md">
+                  <span className="text-white px-2 py-2 rounded-md">
                     <FaLock
                       className={`${isDarkTheme ? "text-white" : "text-black"}`}
                       size={14}
@@ -76,13 +76,13 @@ function Topbar({
                 <div className="ml-auto">
                   <span
                     onClick={() => joinRoom(room)}
-                    className="text-xs px-2 py-1 rounded-md bg-accentDark text-white hover:bg-accent cursor-pointer"
+                    className="text-sm px-2 py-2 rounded-md bg-accentDark text-white hover:bg-accent cursor-pointer"
                   >
                     Join
                   </span>
                   <span
                     onClick={() => leaveRoom(room)}
-                    className={`text-xs px-2 py-1 rounded-md ml-2 cursor-pointer ${
+                    className={`text-sm px-2 py-2 rounded-md ml-2 cursor-pointer ${
                       isDarkTheme
                         ? "bg-dark1 text-white hover:bg-red-500"
                         : "bg-gray-300 text-black hover:bg-red-400"

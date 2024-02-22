@@ -15,9 +15,9 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
-    // setTimeout(() => {
-    //   setShowDropdown(false);
-    // }, 3000);
+    setTimeout(() => {
+      setShowDropdown(false);
+    }, 3000);
   };
 
   return (
@@ -73,8 +73,8 @@ function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
 
               {showDropdown && (
                 <div
-                  className={`absolute right-0 w-32 border-2 border-dark1 ${
-                    isDarkTheme ? "bg-darkslate" : "bg-white"
+                  className={`absolute right-0 w-32  ${
+                    isDarkTheme ? "bg-darkslate border-2 border-dark1" : "bg-white border-2 border-gray-200"
                   }  rounded-lg shadow-lg p-2 `}
                 >
                   <div className="flex flex-col items-center">

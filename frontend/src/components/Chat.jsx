@@ -177,17 +177,17 @@ function Chat({ isDarkTheme, user }) {
           isDarkTheme={isDarkTheme}
           rooms={rooms}
           currentRoom={currentRoom}
-          createPrivateRoom={createPrivateRoom}
+          createPrivateRoom={() => setShowCreatePrivateRoomModal(true)}
           joinRoom={joinRoom}
           leaveRoom={leaveRoom}
         />
       ) : (
         <Sidebar
-          createPrivateRoom={() => setShowCreatePrivateRoomModal(true)}
-          rooms={rooms}
           isDarkTheme={isDarkTheme}
-          joinRoom={joinRoom}
+          rooms={rooms}
           currentRoom={currentRoom}
+          createPrivateRoom={() => setShowCreatePrivateRoomModal(true)}
+          joinRoom={joinRoom}
           leaveRoom={leaveRoom}
         />
       )}

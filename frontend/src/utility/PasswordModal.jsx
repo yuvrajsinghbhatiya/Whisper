@@ -14,7 +14,7 @@ function PasswordModal({setPassword,setShowJoinRoomModal,handleJoinRoom,password
               className={`w-auto p-2 rounded outline-none mb-4 ${
                 isDarkTheme
                   ? "bg-dark1 text-white"
-                  : " border-2 border-neutral-400 bg-gray-200 text-black"
+                  : " border-2 border-gray-300 bg-gray-200 text-neutral-700"
               }`}
             />
             <div className="flex justify-center mt-2">

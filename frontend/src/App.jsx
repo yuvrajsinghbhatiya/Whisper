@@ -29,7 +29,7 @@ function App() {
     }
     const newTimeoutId = setTimeout(() => {
       handleLogout();
-    }, 10 * 60 * 1000);
+    }, 5 * 60 * 1000);
     setTimeoutId(newTimeoutId);
   };
 
@@ -62,7 +62,9 @@ function App() {
       onClick={handleUserActivity}
     >
       {isLoading ? (
-        <LoadingScreen />
+        <LoadingScreen
+          isDarkTheme={isDarkTheme}
+        />
       ) : (
         <>
           <Navbar

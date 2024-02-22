@@ -8,6 +8,7 @@ function Sidebar({
   currentRoom,
   createPrivateRoom,
   joinRoom,
+  leaveRoom
 }) {
   return (
     <>
